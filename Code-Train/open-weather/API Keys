@@ -1,0 +1,8 @@
+API Key (Might not be activated yet)
+3b70e0ca7a0a604d226cbb5929e4a107
+
+* Coding Train API:
+001b0f58045147663b1ea518d34d88b4
+
+With API call
+https://api.openweathermap.org/data/2.5/weather?q=Toronto&APPID=001b0f58045147663b1ea518d34d88b4
