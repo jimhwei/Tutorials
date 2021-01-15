@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Train: 1.1 Data & API</title>
+</head>
+<body>
+    <!-- This is an self closing tag, also an empty element in the DOM with an ID-->
+    <img src="" id="rainbow" alt="pic of a rainbow" />
+    
+    <!-- Poem fetch -->
+    <p id="poem"></p>
+    <script>
+        console.log("Fetching a rainbow");
+
+        
+        catchRainbow()
+            .then(response => {
+                console.log('Response as a result of catchRainbow loading')
+            })
+            .catch(error => {
+            console.log('error!');
+            console.error(error);
+        });
+        
+        // Async is a fxn that happens at a different time from the main fxn
+        async function catchRainbow() {
+            // the await is syntactic sugar => easier to understand
+            const response = await fetch('rainbow.jpg')
+            const blob = await response.blob();
+            // This line is taking the blob and putting it in the empty tag in the html part
+            // We have to use the URL.createObjectURL method because the DOM is not expecting a blob for img tag
+            document.getElementById('rainbow').src = URL.createObjectURL(blob);
+        }
+
+        // The above lines and lines below are the same 
+
+        // // The fetch is based on a live port extension, won't work without it
+        // fetch('rainbow.jpg')
+        //     // The then is a method that returns a promise (the response)
+        //     // The arrow is ES6 feature for "function"
+        //     .then(response => {
+        //     console.log(response);
+        //     return response.blob();
+        // })
+        //     .then(blob => {
+        //         console.log(blob)
+        //         // This URL thing is the form that the image blob accepts
+        //         document.getElementById('rainbow').src = URL.createObjectURL(blob); 
+        //     })
+        //     // .catch handles errors and logs the console
+        //     .catch(error => {
+        //         console.log('error!');
+        //         console.error(error);
+        //     });
+
+        // Attempting a file fetch
+        let file = "poem.txt"
+        fetch (file)
+        .then(x => x.text())
+        .then(y => document.getElementById("poem").innerHTML = y);
+    </script>
+</body>
+</html>

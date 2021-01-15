@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Train: 1.1 Data & API</title>
+</head>
+<body>
+    <h1>Fetch Multiple Pictures</h1>
+    
+    <script>
+        console.log("Fetching some pictures");
+        const filenames = [
+            'images/pic1.jpg',
+            'images/pic2.jpg',
+            'images/pic3.jpg'
+        ]
+
+        // Calling function with filename as parameter
+        catchRainbow(filenames)
+            .then(response => {
+                console.log('Loading okay')
+            })
+            .catch(error => {
+            console.log('An error has occured!');
+            console.error(error);
+        });
+        
+        // Function definition with filenames as param
+        async function catchRainbow(filenames) {
+            for (let filez of filenames){
+                const response = await fetch(filez);
+                const blob = await response.blob();
+                // Creating elements called img
+                const img = document.createElement('img');
+                // creating blob objects
+                img.src = URL.createObjectURL(blob);
+                img.width ='200'; // This shrinks it down
+                document.body.append(img);
+
+                // document.getElementById('rainbow').src = URL.createObjectURL(blob);
+            }
+        }
+
+    </script>
+</body>
+</html>

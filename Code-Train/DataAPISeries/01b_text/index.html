@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Document</title>
+</head>
+<body>
+    <h1>Fetching a poem</h1>
+    <p id="poem"></p>
+
+    <script>
+        console.log("Inserting Text");
+        displayText()
+            // This line is telling what to when the response goes through
+            // this promise here has to match with what the innerText is equal to
+            .then(text => {
+                // We swap the innertext here in the p tag
+                document.getElementById('poem').innerText = text;
+            })
+            .catch(error => {
+                console.log('error!');
+                console.error(error);
+            })
+
+        async function displayText() {
+            const response = await fetch('poem.txt');
+            return await response.text(); // Should stop fxn?
+            // These two lines I tried to use following the image example but returns an undefined
+            // I ended up swapping the src to innertext for document.getElementById line
+            // const text = await response.text;
+            // document.getElementById('text').innerText = text;
+        }
+
+        console.log("Done");
+    </script>
+</body>
+</html>
