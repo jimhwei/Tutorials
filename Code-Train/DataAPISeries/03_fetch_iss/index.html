@@ -27,9 +27,11 @@
 
     <div id="mapid"></div>
     <!-- Why span? Span is a general container-->
-    <p>Latitude: <span id="lat"></span>°</p>
-    <p>Longitude: <span id="lon"></span>°</p>
-    <p>ISS Velocity: <span id="vel"></span>m/s</p>
+    <p>
+      Latitude: <span id="lat"></span>°<br />
+      Longitude: <span id="lon"></span>°<br />
+      ISS Velocity: <span id="vel"></span>m/s
+    </p>
 
     <script>
       // Making a map and tiles
@@ -43,7 +45,7 @@
       tiles.addTo(mymap);
 
       // Making my marker using a custom icon
-      var issIcon = L.icon({
+      const issIcon = L.icon({
         iconUrl: "iss.png",
         iconSize: [80, 51],
         iconAnchor: [25, 16],
@@ -53,7 +55,20 @@
       let marker = L.marker([0, 0], { icon: issIcon }).addTo(mymap);
 
       // url needs to be defined first before calling function
+      mymap.on("zoomend", function () {
+        const zoom = mymap.getZoom() + 1;
+        const w = 50 * zoom;
+        const h = 32 * zoom;
+        issIcon.options.iconSize = [w, h];
+        issIcon.options.iconAnchor = [w / 2, h / 2];
+        mymap.removeLayer(marker);
+        let latlng = marker.getLatLng();
+        marker = L.marker([0, 0], { icon: issIcon }).addTo(mymap);
+        marker.setLatLng(latlng);
+      });
+
       const api_url = "https://api.wheretheiss.at/v1/satellites/25544";
+      let firstTime = true;
       async function getISS() {
         const response = await fetch(api_url);
         const data = await response.json();
@@ -64,6 +79,10 @@
 
         // L.marker([latitude, longitude]).addTo(mymap); which also works
         marker.setLatLng([latitude, longitude]);
+        if (firstTime) {
+          mymap.setView([latitude, longitude], 2);
+          firstTime = false;
+        }
 
         document.getElementById("lat").textContent = latitude.toFixed(2);
         document.getElementById("lon").textContent = longitude.toFixed(2);
@@ -72,7 +91,7 @@
 
       getISS();
 
-      setInterval(getISS, 1000);
+      setInterval(getISS, 2000);
     </script>
   </body>
 </html>
