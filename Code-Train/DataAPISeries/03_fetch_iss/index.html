@@ -1,9 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="Honglin (Jim) Wei" />
+    <!-- Template created by Mark Otto, Jacob Thornton, and Bootstrap contributors -->
+    <meta name="generator" content="Hugo 0.79.0" />
     <title>ISS Live</title>
+
+    <!-- Style -->
+    <link
+      rel="canonical"
+      href="https://getbootstrap.com/docs/5.0/examples/sticky-footer/"
+    />
+
+    <!-- Bootstrap core CSS -->
+    <link href="./bootstrap.min.css" rel="stylesheet" />
+
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -16,23 +30,86 @@
       integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
       crossorigin=""
     ></script>
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .container {
+        width: auto;
+        max-width: 680px;
+        padding: 0 15px;
+      }
+
+      #mapid {
+        height: 550px;
+        width: 80%;
+        margin: auto;
+      }
+      p#start-text {
+        margin-top: 10px;
+      }
+
+      @media only screen and (max-width: 375px) {
+        #mapid {
+          width: 100%;
+        }
+      }
+    </style>
+
+    <!-- Custom styles for this template -->
+    <link href="sticky-footer.css" rel="stylesheet" />
   </head>
-  <style>
-    #mapid {
-      height: 550px;
-    }
-  </style>
-  <body>
-    <h1>Where's the ISS?</h1>
+  <body class="d-flex flex-column h-100">
+    <!-- Begin page content -->
+    <main class="flex-shrink-0">
+      <div class="container">
+        <h1 class="mt-5">Where's the ISS?</h1>
+      </div>
+      <div id="mapid"></div>
+      <div class="container">
+        <p id="start-text">
+          Latitude: <span id="lat"></span>°<br />
+          Longitude: <span id="lon"></span>°<br />
+          ISS Velocity: <span id="vel"></span>m/s
+        </p>
+        <p class="lead">About</p>
+        <p>
+          The ISS is a near circular orbit spacecraft operating 330km above
+          Earth since October 31 2000. Composed of modules created by multiple
+          nations, it was originally designed to be a laboratory and observatory
+          with potential roles in assisting future missions to the Moon, Mars
+          and asteroids. As of 2021, 8 Canadians have been on board the ISS.
+        </p>
+        <p>
+          This APP was made possible using the JavaScript Fetch API function and
+          Leaflet with OpenStreetMap Data. The web app updates every two seconds
+          to show the position of the ISS over earth and its velocity. The map
+          projection is Web Mercator, a commonly used projection for Web maps
+          with distortion greatest around the poles.
+        </p>
+      </div>
+    </main>
 
-    <div id="mapid"></div>
-    <!-- Why span? Span is a general container-->
-    <p>
-      Latitude: <span id="lat"></span>°<br />
-      Longitude: <span id="lon"></span>°<br />
-      ISS Velocity: <span id="vel"></span>m/s
-    </p>
-
+    <footer class="footer mt-auto py-3 bg-light">
+      <div class="container">
+        <span class="text-muted"
+          >Created and Modified by Honglin (Jim) Wei based on Code-Train API
+          Series
+        </span>
+      </div>
+    </footer>
     <script>
       // Making a map and tiles
       // The capital L here is available because we loaded the leaflet library
@@ -90,7 +167,6 @@
       }
 
       getISS();
-
       setInterval(getISS, 2000);
     </script>
   </body>
